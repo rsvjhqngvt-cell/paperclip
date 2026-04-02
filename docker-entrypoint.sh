@@ -25,5 +25,5 @@ fi
 if [ "$changed" = "1" ]; then
     chown -R node:node /paperclip
 fi
-gosu node node cli/node_modules/tsx/dist/cli.mjs cli/src/index.ts auth bootstrap-ceo 2>&1 || true
+echo "=== BOOTSTRAP START ===" && gosu node node cli/node_modules/tsx/dist/cli.mjs cli/src/index.ts auth bootstrap-ceo 2>&1 && echo "=== BOOTSTRAP END ===" || echo "=== BOOTSTRAP FAILED ==="
 exec gosu node "$@"
