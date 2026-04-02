@@ -26,7 +26,9 @@ if [ "$changed" = "1" ]; then
     chown -R node:node /paperclip
 fi
 gosu node "$@" &
-sleep 20
+echo "=== Waiting for server to start ==="
+while [ ! -f /paperclip/instances/default/config.json ]; do sleep 3; done
+sleep 5
 echo "=== BOOTSTRAP START ==="
 gosu node node cli/node_modules/tsx/dist/cli.mjs cli/src/index.ts auth bootstrap-ceo 2>&1 || true
 echo "=== BOOTSTRAP END ==="
