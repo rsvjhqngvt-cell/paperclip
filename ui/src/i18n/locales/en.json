@@ -420,7 +420,22 @@
     "groupNone": "None",
     "noIssuesMatchFilter": "No issues match the current filters or search.",
     "createIssue": "Create Issue",
-    "searchAssigneesPlaceholder": "Search assignees..."
+    "searchAssigneesPlaceholder": "Search assignees...",
+    "commentsAndRunsCount": "Comments & Runs ({{count}})",
+    "runLabel": "Run",
+    "leaveComment": "Leave a comment...",
+    "reopen": "Re-open",
+    "posting": "Posting...",
+    "comment": "Comment",
+    "attachImage": "Attach image",
+    "assignee": "Assignee",
+    "noAssignee": "No assignee",
+    "searchAssignees": "Search assignees...",
+    "noAssigneesFound": "No assignees found.",
+    "documents": "Documents",
+    "newDocument": "New document",
+    "newDocumentShort": "New",
+    "noCommentsOrRuns": "No comments or runs yet."
   },
   "projects": {
     "title": "Projects",

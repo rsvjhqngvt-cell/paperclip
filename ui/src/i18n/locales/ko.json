@@ -420,7 +420,22 @@
     "groupNone": "없음",
     "noIssuesMatchFilter": "현재 필터/검색에 맞는 이슈가 없습니다.",
     "createIssue": "이슈 생성",
-    "searchAssigneesPlaceholder": "담당자 검색..."
+    "searchAssigneesPlaceholder": "담당자 검색...",
+    "commentsAndRunsCount": "댓글 및 실행 ({{count}})",
+    "runLabel": "실행",
+    "leaveComment": "댓글 작성...",
+    "reopen": "다시 열기",
+    "posting": "게시 중...",
+    "comment": "댓글",
+    "attachImage": "이미지 첨부",
+    "assignee": "담당자",
+    "noAssignee": "담당자 없음",
+    "searchAssignees": "담당자 검색...",
+    "noAssigneesFound": "담당자를 찾을 수 없습니다.",
+    "documents": "문서",
+    "newDocument": "새 문서",
+    "newDocumentShort": "새로",
+    "noCommentsOrRuns": "아직 댓글이나 실행이 없습니다."
   },
   "projects": {
     "title": "프로젝트",

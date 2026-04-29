@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import type { DocumentRevision, Issue, IssueDocument } from "@paperclipai/shared";
 import { useLocation } from "@/lib/router";
 import { ApiError } from "../api/client";
@@ -111,6 +112,7 @@ export function IssueDocumentsSection({
   imageUploadHandler?: (file: File) => Promise<string>;
   extraActions?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const location = useLocation();
   const [confirmDeleteKey, setConfirmDeleteKey] = useState<string | null>(null);
@@ -605,19 +607,19 @@ export function IssueDocumentsSection({
           {extraActions}
           <Button variant="outline" size="sm" onClick={beginNewDocument} className="shrink-0">
             <Plus className="mr-1.5 h-3.5 w-3.5" />
-            <span className="hidden sm:inline">New document</span>
-            <span className="sm:hidden">New</span>
+            <span className="hidden sm:inline">{t("issues.newDocument")}</span>
+            <span className="sm:hidden">{t("issues.newDocumentShort")}</span>
           </Button>
         </div>
       ) : (
         <div className="flex items-center justify-between gap-2 min-w-0">
-          <h3 className="text-sm font-medium text-muted-foreground shrink-0">Documents</h3>
+          <h3 className="text-sm font-medium text-muted-foreground shrink-0">{t("issues.documents")}</h3>
           <div className="flex items-center gap-2 min-w-0">
             {extraActions}
             <Button variant="outline" size="sm" onClick={beginNewDocument} className="shrink-0">
               <Plus className="mr-1.5 h-3.5 w-3.5" />
-              <span className="hidden sm:inline">New document</span>
-              <span className="sm:hidden">New</span>
+              <span className="hidden sm:inline">{t("issues.newDocument")}</span>
+              <span className="sm:hidden">{t("issues.newDocumentShort")}</span>
             </Button>
           </div>
         </div>
