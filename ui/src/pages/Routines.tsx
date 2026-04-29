@@ -53,8 +53,11 @@ function autoResizeTextarea(element: HTMLTextAreaElement | null) {
   element.style.height = `${element.scrollHeight}px`;
 }
 
-function formatLastRunTimestamp(value: Date | string | null | undefined) {
-  if (!value) return "Never";
+function formatLastRunTimestamp(
+  value: Date | string | null | undefined,
+  neverLabel: string,
+) {
+  if (!value) return neverLabel;
   return new Date(value).toLocaleString();
 }
 
@@ -555,7 +558,7 @@ export function Routines() {
                               className="shrink-0 h-3 w-3 rounded-sm"
                               style={{ backgroundColor: projectById.get(routine.projectId)?.color ?? "#6366f1" }}
                             />
-                            <span className="truncate">{projectById.get(routine.projectId)?.name ?? "Unknown"}</span>
+                            <span className="truncate">{projectById.get(routine.projectId)?.name ?? t("common.unknown")}</span>
                           </div>
                         ) : (
                           <span className="text-xs text-muted-foreground">—</span>
@@ -577,7 +580,7 @@ export function Routines() {
                         )}
                       </td>
                       <td className="px-3 py-2.5 text-muted-foreground">
-                        <div>{formatLastRunTimestamp(routine.lastRun?.triggeredAt)}</div>
+                        <div>{formatLastRunTimestamp(routine.lastRun?.triggeredAt, t("routines.never"))}</div>
                         {routine.lastRun ? (
                           <div className="mt-1 text-xs">{routine.lastRun.status.replaceAll("_", " ")}</div>
                         ) : null}
@@ -589,7 +592,7 @@ export function Routines() {
                             role="switch"
                             data-slot="toggle"
                             aria-checked={enabled}
-                            aria-label={enabled ? `Disable ${routine.title}` : `Enable ${routine.title}`}
+                            aria-label={enabled ? t("routines.ariaDisable", { title: routine.title }) : t("routines.ariaEnable", { title: routine.title })}
                             disabled={isStatusPending || isArchived}
                             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                               enabled ? "bg-foreground" : "bg-muted"
@@ -608,14 +611,14 @@ export function Routines() {
                             />
                           </button>
                           <span className="text-xs text-muted-foreground">
-                            {isArchived ? "Archived" : enabled ? "On" : "Off"}
+                            {isArchived ? t("routines.statusArchived") : enabled ? t("routines.statusOn") : t("routines.statusOff")}
                           </span>
                         </div>
                       </td>
                       <td className="px-3 py-2.5 text-right" onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon-sm" aria-label={`More actions for ${routine.title}`}>
+                            <Button variant="ghost" size="icon-sm" aria-label={t("routines.ariaMoreActions", { title: routine.title })}>
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
