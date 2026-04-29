@@ -32,6 +32,7 @@ import { Tabs } from "@/components/ui/tabs";
 import { PluginLauncherOutlet } from "@/plugins/launchers";
 import { PluginSlotMount, PluginSlotOutlet, usePluginSlots } from "@/plugins/slots";
 import { Clock3, Copy, GitBranch, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /* ── Top-level tab types ── */
 
@@ -67,6 +68,7 @@ function OverviewContent({
   onUpdate: (data: Record<string, unknown>) => void;
   imageUploadHandler?: (file: File) => Promise<string>;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="space-y-6">
       <InlineEditor
@@ -74,21 +76,21 @@ function OverviewContent({
         onSave={(description) => onUpdate({ description })}
         as="p"
         className="text-sm text-muted-foreground"
-        placeholder="Add a description..."
+        placeholder={t("projects.addDescription")}
         multiline
         imageUploadHandler={imageUploadHandler}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
         <div>
-          <span className="text-muted-foreground">Status</span>
+          <span className="text-muted-foreground">{t("projects.status")}</span>
           <div className="mt-1">
             <StatusBadge status={project.status} />
           </div>
         </div>
         {project.targetDate && (
           <div>
-            <span className="text-muted-foreground">Target Date</span>
+            <span className="text-muted-foreground">{t("projects.targetDate")}</span>
             <p>{project.targetDate}</p>
           </div>
         )}
@@ -106,6 +108,7 @@ function ColorPicker({
   currentColor: string;
   onSelect: (color: string) => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -126,7 +129,7 @@ function ColorPicker({
         onClick={() => setOpen(!open)}
         className="shrink-0 h-5 w-5 rounded-md cursor-pointer hover:ring-2 hover:ring-foreground/20 transition-[box-shadow]"
         style={{ backgroundColor: currentColor }}
-        aria-label="Change project color"
+        aria-label={t("projects.changeColor")}
       />
       {open && (
         <div className="absolute top-full left-0 mt-2 p-2 bg-popover border border-border rounded-lg shadow-lg z-50 w-max">
@@ -220,6 +223,7 @@ function ProjectWorkspacesContent({
   projectRef: string;
   summaries: ReturnType<typeof buildProjectWorkspaceSummaries>;
 }) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [runtimeActionKey, setRuntimeActionKey] = useState<string | null>(null);
   const [closingWorkspace, setClosingWorkspace] = useState<{
@@ -249,7 +253,7 @@ function ProjectWorkspacesContent({
   });
 
   if (summaries.length === 0) {
-    return <p className="text-sm text-muted-foreground">No non-default workspace activity yet.</p>;
+    return <p className="text-sm text-muted-foreground">{t("projects.noWorkspaceActivity")}</p>;
   }
 
   const activeSummaries = summaries.filter((summary) => summary.executionWorkspaceStatus !== "cleanup_failed");
@@ -280,10 +284,10 @@ function ProjectWorkspacesContent({
             <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1">
                 <GitBranch className="h-3.5 w-3.5" />
-                <span className="font-mono">{summary.branchName ?? "No branch info"}</span>
+                <span className="font-mono">{summary.branchName ?? t("projects.noBranchInfo")}</span>
               </span>
               <span className="rounded-full border border-border px-2 py-0.5 text-[11px]">
-                {summary.runningServiceCount}/{summary.serviceCount} services running
+                {t("projects.servicesRunning", { running: summary.runningServiceCount, total: summary.serviceCount })}
               </span>
               {summary.executionWorkspaceStatus ? (
                 <span className="rounded-full border border-border px-2 py-0.5 text-[11px]">
@@ -307,7 +311,7 @@ function ProjectWorkspacesContent({
                 <span className="min-w-0 truncate font-mono leading-tight" title={summary.cwd}>
                   {summary.cwd}
                 </span>
-                <CopyText text={summary.cwd} className="shrink-0" copiedLabel="Path copied">
+                <CopyText text={summary.cwd} className="shrink-0" copiedLabel={t("projects.pathCopied")}>
                   <Copy className="h-3.5 w-3.5" />
                 </CopyText>
               </div>
@@ -316,7 +320,7 @@ function ProjectWorkspacesContent({
 
           <div className="min-w-0">
             <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-              Issues ({summary.issues.length})
+              {t("projects.issuesCount", { count: summary.issues.length })}
             </div>
             <div className="flex flex-wrap gap-2">
               {visibleIssues.map((issue) => (
@@ -333,7 +337,7 @@ function ProjectWorkspacesContent({
               ))}
               {hiddenIssueCount > 0 ? (
                 <span className="inline-flex items-center rounded-md border border-dashed border-border px-2.5 py-1.5 text-xs text-muted-foreground">
-                  ... and {hiddenIssueCount} more
+                  {t("projects.andMore", { count: hiddenIssueCount })}
                 </span>
               ) : null}
             </div>
@@ -344,7 +348,7 @@ function ProjectWorkspacesContent({
               to={workspaceHref}
               className="text-xs font-medium text-foreground hover:underline"
             >
-              {summary.kind === "project_workspace" ? "Configure workspace" : "View workspace"}
+              {summary.kind === "project_workspace" ? t("projects.configureWorkspace") : t("projects.viewWorkspace")}
             </Link>
             <div className="flex flex-wrap gap-2">
               <Button
@@ -365,7 +369,7 @@ function ProjectWorkspacesContent({
                 }
               >
                 {runtimeActionKey === `${summary.key}:start` ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : null}
-                Start
+                {t("projects.start")}
               </Button>
               <Button
                 variant="outline"
@@ -380,7 +384,7 @@ function ProjectWorkspacesContent({
                   })
                 }
               >
-                Stop
+                {t("projects.stop")}
               </Button>
             </div>
             {summary.kind === "execution_workspace" && summary.executionWorkspaceId && summary.executionWorkspaceStatus ? (
@@ -393,7 +397,7 @@ function ProjectWorkspacesContent({
                   status: summary.executionWorkspaceStatus!,
                 })}
               >
-                {summary.executionWorkspaceStatus === "cleanup_failed" ? "Retry close" : "Close workspace"}
+                {summary.executionWorkspaceStatus === "cleanup_failed" ? t("projects.retryClose") : t("projects.closeWorkspace")}
               </Button>
             ) : null}
             <div className="inline-flex items-center gap-1 text-xs text-muted-foreground">
@@ -415,7 +419,7 @@ function ProjectWorkspacesContent({
         {cleanupFailedSummaries.length > 0 ? (
           <div className="space-y-2">
             <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-              Cleanup attention needed
+              {t("projects.cleanupAttention")}
             </div>
             <div className="overflow-hidden rounded-xl border border-amber-500/20 bg-amber-500/5">
               {cleanupFailedSummaries.map(renderSummaryRow)}
@@ -447,6 +451,7 @@ function ProjectWorkspacesContent({
 /* ── Main project page ── */
 
 export function ProjectDetail() {
+  const { t } = useTranslation();
   const { companyPrefix, projectId, filter } = useParams<{
     companyPrefix?: string;
     projectId: string;
@@ -569,17 +574,17 @@ export function ProjectDetail() {
       ),
     onSuccess: (updatedProject, archived) => {
       invalidateProject();
-      const name = updatedProject?.name ?? project?.name ?? "Project";
+      const name = updatedProject?.name ?? project?.name ?? t("projects.project");
       if (archived) {
-        pushToast({ title: `"${name}" has been archived`, tone: "success" });
+        pushToast({ title: t("projects.archivedToast", { name }), tone: "success" });
         navigate("/dashboard");
       } else {
-        pushToast({ title: `"${name}" has been unarchived`, tone: "success" });
+        pushToast({ title: t("projects.unarchivedToast", { name }), tone: "success" });
       }
     },
     onError: (_, archived) => {
       pushToast({
-        title: archived ? "Failed to archive project" : "Failed to unarchive project",
+        title: archived ? t("projects.failedToArchive") : t("projects.failedToUnarchive"),
         tone: "error",
       });
     },
@@ -587,7 +592,7 @@ export function ProjectDetail() {
 
   const uploadImage = useMutation({
     mutationFn: async (file: File) => {
-      if (!resolvedCompanyId) throw new Error("No company selected");
+      if (!resolvedCompanyId) throw new Error(t("projects.noCompanySelected"));
       return assetsApi.uploadImage(resolvedCompanyId, file, `projects/${projectLookupRef || "draft"}`);
     },
   });
@@ -602,10 +607,10 @@ export function ProjectDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
-      { label: project?.name ?? routeProjectRef ?? "Project" },
+      { label: t("projects.title"), href: "/projects" },
+      { label: project?.name ?? routeProjectRef ?? t("projects.project") },
     ]);
-  }, [setBreadcrumbs, project, routeProjectRef]);
+  }, [setBreadcrumbs, project, routeProjectRef, t]);
 
   useEffect(() => {
     if (!project) return;
@@ -699,7 +704,7 @@ export function ProjectDetail() {
       companyId: resolvedCompanyId ?? "",
       scopeType: "project",
       scopeId: project?.id ?? routeProjectRef,
-      scopeName: project?.name ?? "Project",
+      scopeName: project?.name ?? t("projects.project"),
       metric: "billed_cents",
       windowKind: "lifetime",
       amount: 0,
@@ -856,11 +861,11 @@ export function ProjectDetail() {
       <Tabs value={activeTab ?? "list"} onValueChange={(value) => handleTabChange(value as ProjectTab)}>
         <PageTabBar
           items={[
-            { value: "list", label: "Issues" },
-            { value: "overview", label: "Overview" },
-            ...(showWorkspacesTab ? [{ value: "workspaces", label: "Workspaces" }] : []),
-            { value: "configuration", label: "Configuration" },
-            { value: "budget", label: "Budget" },
+            { value: "list", label: t("projects.issues") },
+            { value: "overview", label: t("projects.overview") },
+            ...(showWorkspacesTab ? [{ value: "workspaces", label: t("projects.workspaces") }] : []),
+            { value: "configuration", label: t("projects.configuration") },
+            { value: "budget", label: t("projects.budget") },
             ...pluginTabItems.map((item) => ({
               value: item.value,
               label: item.label,
@@ -900,7 +905,7 @@ export function ProjectDetail() {
             />
           )
         ) : (
-          <p className="text-sm text-muted-foreground">Loading workspaces...</p>
+          <p className="text-sm text-muted-foreground">{t("projects.loadingWorkspaces")}</p>
         )
       ) : null}
 
