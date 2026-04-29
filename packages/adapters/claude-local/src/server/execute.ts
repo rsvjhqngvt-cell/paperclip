@@ -49,11 +49,16 @@ async function buildSkillsDir(config: Record<string, unknown>): Promise<string> 
       availableEntries,
     ),
   );
+  // On Windows, regular symlinks require admin or Developer Mode. Junctions
+  // (directory junctions) work for any user but only target directories — and
+  // skill sources are directories, so this is safe and avoids EPERM on Windows.
+  const linkType = process.platform === "win32" ? "junction" : undefined;
   for (const entry of availableEntries) {
     if (!desiredNames.has(entry.key)) continue;
     await fs.symlink(
       entry.source,
       path.join(target, entry.runtimeName),
+      linkType,
     );
   }
   return tmp;
