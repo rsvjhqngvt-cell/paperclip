@@ -24,9 +24,12 @@ export function selectDefaultCompanyGoalId(goals: Goal[]): string | null {
   );
 }
 
-export function buildOnboardingProjectPayload(goalId: string | null) {
+export function buildOnboardingProjectPayload(
+  goalId: string | null,
+  name: string = ONBOARDING_PROJECT_NAME,
+) {
   return {
-    name: ONBOARDING_PROJECT_NAME,
+    name,
     status: "in_progress" as const,
     ...(goalId ? { goalIds: [goalId] } : {}),
   };

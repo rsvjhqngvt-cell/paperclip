@@ -1197,6 +1197,9 @@
     "createAndOpenIssue": "이슈 생성 후 열기",
     "warnings": "경고",
     "failed": "실패",
-    "hintLabel": "힌트"
+    "hintLabel": "힌트",
+    "seedTaskTitle": "첫 엔지니어를 고용하고 채용 계획을 작성하세요",
+    "seedTaskDescription": "당신은 CEO입니다. 회사의 방향을 정합니다.\n\n- 창업 엔지니어를 고용하세요\n- 채용 계획을 작성하세요\n- 로드맵을 구체적인 작업으로 나누고 위임을 시작하세요",
+    "seedProjectName": "온보딩"
   }
 }

@@ -1197,6 +1197,9 @@
     "createAndOpenIssue": "Create & Open Issue",
     "warnings": "Warnings",
     "failed": "Failed",
-    "hintLabel": "Hint"
+    "hintLabel": "Hint",
+    "seedTaskTitle": "Hire your first engineer and create a hiring plan",
+    "seedTaskDescription": "You are the CEO. You set the direction for the company.\n\n- hire a founding engineer\n- write a hiring plan\n- break the roadmap into concrete tasks and start delegating work",
+    "seedProjectName": "Onboarding"
   }
 }

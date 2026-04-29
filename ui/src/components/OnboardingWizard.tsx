@@ -71,12 +71,6 @@ type AdapterType =
   | "http"
   | "openclaw_gateway";
 
-const DEFAULT_TASK_DESCRIPTION = `You are the CEO. You set the direction for the company.
-
-- hire a founding engineer
-- write a hiring plan
-- break the roadmap into concrete tasks and start delegating work`;
-
 export function OnboardingWizard() {
   const { t } = useTranslation();
   const { onboardingOpen, onboardingOptions, closeOnboarding } = useDialog();
@@ -131,11 +125,9 @@ export function OnboardingWizard() {
   const [showMoreAdapters, setShowMoreAdapters] = useState(false);
 
   // Step 3
-  const [taskTitle, setTaskTitle] = useState(
-    "Hire your first engineer and create a hiring plan"
-  );
-  const [taskDescription, setTaskDescription] = useState(
-    DEFAULT_TASK_DESCRIPTION
+  const [taskTitle, setTaskTitle] = useState(() => t("onboarding.seedTaskTitle"));
+  const [taskDescription, setTaskDescription] = useState(() =>
+    t("onboarding.seedTaskDescription"),
   );
 
   // Auto-grow textarea for task description
@@ -301,8 +293,8 @@ export function OnboardingWizard() {
     setAdapterEnvLoading(false);
     setForceUnsetAnthropicApiKey(false);
     setUnsetAnthropicLoading(false);
-    setTaskTitle("Hire your first engineer and create a hiring plan");
-    setTaskDescription(DEFAULT_TASK_DESCRIPTION);
+    setTaskTitle(t("onboarding.seedTaskTitle"));
+    setTaskDescription(t("onboarding.seedTaskDescription"));
     setCreatedCompanyId(null);
     setCreatedCompanyPrefix(null);
     setCreatedCompanyGoalId(null);
@@ -560,7 +552,7 @@ export function OnboardingWizard() {
       if (!projectId) {
         const project = await projectsApi.create(
           createdCompanyId,
-          buildOnboardingProjectPayload(goalId)
+          buildOnboardingProjectPayload(goalId, t("onboarding.seedProjectName"))
         );
         projectId = project.id;
         setCreatedProjectId(projectId);
