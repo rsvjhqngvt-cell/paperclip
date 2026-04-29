@@ -339,7 +339,7 @@ export function ApprovalDetail() {
                     />
                   </Link>
                 ) : (
-                  <Identity name="Board" size="sm" />
+                  <Identity name={t("issues.actorBoard")} size="sm" />
                 )}
                 <span className="text-xs text-muted-foreground">
                   {new Date(comment.createdAt).toLocaleString()}

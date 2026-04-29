@@ -350,7 +350,10 @@
     "manageSkillsInAdapterDirectly": "어댑터에서 직접 스킬을 관리하세요.",
     "importSkillsFirst": "먼저 회사 라이브러리로 스킬을 가져온 다음 여기서 연결하세요.",
     "userInstalledSkillsCount": "({{count}})개 사용자 설치 스킬, Paperclip에서 관리되지 않음",
-    "failedToUpdateSkills": "스킬을 업데이트하지 못했습니다"
+    "failedToUpdateSkills": "스킬을 업데이트하지 못했습니다",
+    "runHeartbeat": "하트비트 실행",
+    "selectCompanyForImages": "이미지를 업로드하려면 회사를 선택하세요",
+    "defaultKeyName": "기본값"
   },
   "issues": {
     "title": "이슈",

@@ -350,7 +350,10 @@
     "manageSkillsInAdapterDirectly": "Manage skills in the adapter directly.",
     "importSkillsFirst": "Import skills into the company library first, then attach them here.",
     "userInstalledSkillsCount": "({{count}}) User-installed skills, not managed by Paperclip",
-    "failedToUpdateSkills": "Failed to update skills"
+    "failedToUpdateSkills": "Failed to update skills",
+    "runHeartbeat": "Run Heartbeat",
+    "selectCompanyForImages": "Select a company to upload images",
+    "defaultKeyName": "Default"
   },
   "issues": {
     "title": "Issues",
