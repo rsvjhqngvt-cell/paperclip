@@ -143,26 +143,30 @@ function buildTree(entries: CompanySkillFileInventoryEntry[]) {
   return root.children;
 }
 
-function sourceMeta(sourceBadge: CompanySkillSourceBadge, sourceLabel: string | null) {
+function sourceMeta(
+  sourceBadge: CompanySkillSourceBadge,
+  sourceLabel: string | null,
+  t: (key: string, options?: Record<string, unknown>) => string,
+) {
   const normalizedLabel = sourceLabel?.toLowerCase() ?? "";
   const isSkillsShManaged =
     normalizedLabel.includes("skills.sh") || normalizedLabel.includes("vercel-labs/skills");
 
   switch (sourceBadge) {
     case "skills_sh":
-      return { icon: VercelMark, label: sourceLabel ?? "skills.sh", managedLabel: "skills.sh managed" };
+      return { icon: VercelMark, label: sourceLabel ?? "skills.sh", managedLabel: t("skills.sourceManaged", { source: "skills.sh" }) };
     case "github":
       return isSkillsShManaged
-        ? { icon: VercelMark, label: sourceLabel ?? "skills.sh", managedLabel: "skills.sh managed" }
-        : { icon: Github, label: sourceLabel ?? "GitHub", managedLabel: "GitHub managed" };
+        ? { icon: VercelMark, label: sourceLabel ?? "skills.sh", managedLabel: t("skills.sourceManaged", { source: "skills.sh" }) }
+        : { icon: Github, label: sourceLabel ?? "GitHub", managedLabel: t("skills.sourceManaged", { source: "GitHub" }) };
     case "url":
-      return { icon: Link2, label: sourceLabel ?? "URL", managedLabel: "URL managed" };
+      return { icon: Link2, label: sourceLabel ?? t("skills.sourceUrl"), managedLabel: t("skills.sourceManaged", { source: t("skills.sourceUrl") }) };
     case "local":
-      return { icon: Folder, label: sourceLabel ?? "Folder", managedLabel: "Folder managed" };
+      return { icon: Folder, label: sourceLabel ?? t("skills.sourceFolder"), managedLabel: t("skills.sourceManaged", { source: t("skills.sourceFolder") }) };
     case "paperclip":
-      return { icon: Paperclip, label: sourceLabel ?? "Paperclip", managedLabel: "Paperclip managed" };
+      return { icon: Paperclip, label: sourceLabel ?? t("skills.sourcePaperclip"), managedLabel: t("skills.sourceManaged", { source: t("skills.sourcePaperclip") }) };
     default:
-      return { icon: Boxes, label: sourceLabel ?? "Catalog", managedLabel: "Catalog managed" };
+      return { icon: Boxes, label: sourceLabel ?? t("skills.sourceCatalog"), managedLabel: t("skills.sourceManaged", { source: t("skills.sourceCatalog") }) };
   }
 }
 
@@ -404,6 +408,7 @@ function SkillList({
   onSelectSkill: (skillId: string) => void;
   onSelectPath: (skillId: string, path: string) => void;
 }) {
+  const { t } = useTranslation();
   const filteredSkills = skills.filter((skill) => {
     const haystack = `${skill.name} ${skill.key} ${skill.slug} ${skill.sourceLabel ?? ""}`.toLowerCase();
     return haystack.includes(skillFilter.toLowerCase());
@@ -412,7 +417,7 @@ function SkillList({
   if (filteredSkills.length === 0) {
     return (
       <div className="px-4 py-6 text-sm text-muted-foreground">
-        No skills match this filter.
+        {t("skills.noSkillsMatchFilter")}
       </div>
     );
   }
@@ -422,7 +427,7 @@ function SkillList({
       {filteredSkills.map((skill) => {
         const expanded = expandedSkillId === skill.id;
         const tree = buildTree(skill.fileInventory);
-        const source = sourceMeta(skill.sourceBadge, skill.sourceLabel);
+        const source = sourceMeta(skill.sourceBadge, skill.sourceLabel, t);
         const SourceIcon = source.icon;
 
         return (
@@ -542,7 +547,7 @@ function SkillPane({
     );
   }
 
-  const source = sourceMeta(detail.sourceBadge, detail.sourceLabel);
+  const source = sourceMeta(detail.sourceBadge, detail.sourceLabel, t);
   const SourceIcon = source.icon;
   const usedBy = detail.usedByAgents;
   const body = file?.markdown ? stripFrontmatter(file.content) : file?.content ?? "";
@@ -859,19 +864,19 @@ export function CompanySkills() {
       if (result.imported[0]) navigate(skillRoute(result.imported[0].id));
       pushToast({
         tone: "success",
-        title: "Skills imported",
-        body: `${result.imported.length} skill${result.imported.length === 1 ? "" : "s"} added.`,
+        title: t("skills.skillsImported"),
+        body: t("skills.skillsAdded", { count: result.imported.length }),
       });
       if (result.warnings[0]) {
-        pushToast({ tone: "warn", title: "Import warnings", body: result.warnings[0] });
+        pushToast({ tone: "warn", title: t("skills.importWarnings"), body: result.warnings[0] });
       }
       setSource("");
     },
     onError: (error) => {
       pushToast({
         tone: "error",
-        title: "Skill import failed",
-        body: error instanceof Error ? error.message : "Failed to import skill source.",
+        title: t("skills.skillImportFailed"),
+        body: error instanceof Error ? error.message : t("skills.failedToImportSource"),
       });
     },
   });
@@ -884,15 +889,15 @@ export function CompanySkills() {
       setCreateOpen(false);
       pushToast({
         tone: "success",
-        title: "Skill created",
-        body: `${skill.name} is now editable in the Paperclip workspace.`,
+        title: t("skills.skillCreated"),
+        body: t("skills.skillCreatedBody", { name: skill.name }),
       });
     },
     onError: (error) => {
       pushToast({
         tone: "error",
-        title: "Skill creation failed",
-        body: error instanceof Error ? error.message : "Failed to create skill.",
+        title: t("skills.skillCreationFailed"),
+        body: error instanceof Error ? error.message : t("skills.failedToCreateSkill"),
       });
     },
   });
@@ -900,28 +905,28 @@ export function CompanySkills() {
   const scanProjects = useMutation({
     mutationFn: () => companySkillsApi.scanProjects(selectedCompanyId!),
     onMutate: () => {
-      setScanStatusMessage("Scanning project workspaces for skills...");
+      setScanStatusMessage(t("skills.scanningProjects"));
     },
     onSuccess: async (result) => {
-      setScanStatusMessage("Refreshing skills list...");
+      setScanStatusMessage(t("skills.refreshingList"));
       await queryClient.invalidateQueries({ queryKey: queryKeys.companySkills.list(selectedCompanyId!) });
       const summary = formatProjectScanSummary(result);
       setScanStatusMessage(summary);
       pushToast({
         tone: "success",
-        title: "Project skill scan complete",
+        title: t("skills.scanComplete"),
         body: summary,
       });
       if (result.conflicts[0]) {
         pushToast({
           tone: "warn",
-          title: "Skill conflicts found",
+          title: t("skills.skillConflictsFound"),
           body: result.conflicts[0].reason,
         });
       } else if (result.warnings[0]) {
         pushToast({
           tone: "warn",
-          title: "Scan warnings",
+          title: t("skills.scanWarnings"),
           body: result.warnings[0],
         });
       }
@@ -930,8 +935,8 @@ export function CompanySkills() {
       setScanStatusMessage(null);
       pushToast({
         tone: "error",
-        title: "Project skill scan failed",
-        body: error instanceof Error ? error.message : "Failed to scan project workspaces.",
+        title: t("skills.scanFailed"),
+        body: error instanceof Error ? error.message : t("skills.failedToScanProjects"),
       });
     },
   });
@@ -953,15 +958,15 @@ export function CompanySkills() {
       setEditMode(false);
       pushToast({
         tone: "success",
-        title: "Skill saved",
+        title: t("skills.skillSaved"),
         body: result.path,
       });
     },
     onError: (error) => {
       pushToast({
         tone: "error",
-        title: "Save failed",
-        body: error instanceof Error ? error.message : "Failed to save skill file.",
+        title: t("skills.saveFailed"),
+        body: error instanceof Error ? error.message : t("skills.failedToSaveFile"),
       });
     },
   });
@@ -978,21 +983,21 @@ export function CompanySkills() {
       navigate(skillRoute(skill.id, selectedPath));
       pushToast({
         tone: "success",
-        title: "Skill updated",
-        body: skill.sourceRef ? `Pinned to ${shortRef(skill.sourceRef)}` : skill.name,
+        title: t("skills.skillUpdated"),
+        body: skill.sourceRef ? t("skills.pinnedToRef", { ref: shortRef(skill.sourceRef) }) : skill.name,
       });
     },
     onError: (error) => {
       pushToast({
         tone: "error",
-        title: "Update failed",
-        body: error instanceof Error ? error.message : "Failed to install skill update.",
+        title: t("skills.updateFailed"),
+        body: error instanceof Error ? error.message : t("skills.failedToInstallUpdate"),
       });
     },
   });
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Boxes} message="Select a company to manage skills." />;
+    return <EmptyState icon={Boxes} message={t("skills.selectCompanyToManage")} />;
   }
 
   function handleAddSkillSource() {
