@@ -971,6 +971,17 @@
     "disableAllConfirm": "Disable timer heartbeats for all {{count}} enabled agents?",
     "fullAgentConfig": "Full agent config"
   },
+  "companies": {
+    "title": "Companies",
+    "loading": "Loading companies...",
+    "rename": "Rename",
+    "deleteCompany": "Delete company",
+    "issueCount_one": "{{count}} issue",
+    "issueCount_other": "{{count}} issues",
+    "created": "Created",
+    "confirmDelete": "Delete this company and everything inside? This cannot be undone.",
+    "deleting": "Deleting..."
+  },
   "skills": {
     "title": "Skills",
     "detail": "Detail",

@@ -971,6 +971,17 @@
     "disableAllConfirm": "활성화된 에이전트 {{count}}개의 타이머 하트비트를 모두 비활성화할까요?",
     "fullAgentConfig": "전체 에이전트 설정"
   },
+  "companies": {
+    "title": "회사",
+    "loading": "회사 불러오는 중...",
+    "rename": "이름 변경",
+    "deleteCompany": "회사 삭제",
+    "issueCount_one": "이슈 {{count}}개",
+    "issueCount_other": "이슈 {{count}}개",
+    "created": "생성됨",
+    "confirmDelete": "이 회사와 내부 모든 데이터를 삭제하시겠습니까? 되돌릴 수 없습니다.",
+    "deleting": "삭제 중..."
+  },
   "skills": {
     "title": "스킬",
     "detail": "상세",
