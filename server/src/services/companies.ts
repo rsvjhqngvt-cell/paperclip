@@ -11,6 +11,8 @@ import {
   agentWakeupRequests,
   issues,
   issueComments,
+  issueReadStates,
+  issueInboxArchives,
   projects,
   goals,
   heartbeatRuns,
@@ -270,6 +272,8 @@ export function companyService(db: Db) {
         await tx.delete(invites).where(eq(invites.companyId, id));
         await tx.delete(principalPermissionGrants).where(eq(principalPermissionGrants.companyId, id));
         await tx.delete(companyMemberships).where(eq(companyMemberships.companyId, id));
+        await tx.delete(issueReadStates).where(eq(issueReadStates.companyId, id));
+        await tx.delete(issueInboxArchives).where(eq(issueInboxArchives.companyId, id));
         await tx.delete(issues).where(eq(issues.companyId, id));
         await tx.delete(companyLogos).where(eq(companyLogos.companyId, id));
         await tx.delete(assets).where(eq(assets.companyId, id));
