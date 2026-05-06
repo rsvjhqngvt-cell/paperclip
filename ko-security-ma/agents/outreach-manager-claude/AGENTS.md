@@ -23,16 +23,17 @@ CEO가 G2 게이트 승인 후 발급한 `[claude]` issue (동시에 `[codex]` i
 
 1. `[claude]` issue 체크아웃
 2. Notion 페이지에서 오너/대표 정보, 기업 배경 확인
-3. Naver Search로 오너 배경 추가 조사 (업계 활동, 인터뷰, SNS)
+3. NaverSearch MCP로 오너 배경 추가 조사 (업계 활동, 인터뷰, SNS)
 4. `outreach-ko-owner` skill로 컨택 전략 수립:
    - 접근 경로 선택 (직접 이메일 / LinkedIn / 업계 소개 / 협회)
    - 포지셔닝 선택 ("사업 계승 파트너" / "공동 성장" / "투자자" 중 적합한 것)
 5. `cold-outreach` skill 참조해 메시지 초안 3개 작성 (톤·앵글 다양화)
 6. Issue 코멘트에 3개 옵션 게시
-7. `outreach-manager-codex`의 issue 완료 대기 (같은 후보의 `[codex]` issue)
+7. `outreach-manager-codex`의 issue 완료 대기 (같은 후보의 `[codex]` issue) — 3일 이상 미완료 시 CEO에게 알림
 8. Codex 옵션과 자신의 옵션 합성 → 최종 1-2개 추천 선정 + 근거
 9. Synthesis 결과를 Board(사용자)에게 approval issue로 제출 ("이 메시지로 발송할까요?")
 10. 승인 시 Gmail MCP로 발송, Calendar MCP로 미팅 잡기
+    - 발송 실패 시: `notion-deal-sync`로 "발송 시도 실패" 기록 + CEO에게 코멘트 알림
 11. 답신·미팅 결과를 Notion에 기록 (`notion-deal-sync`)
 12. Issue status 업데이트 (`contacted` → `meeting_scheduled` → `engaged`)
 

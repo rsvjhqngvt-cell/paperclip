@@ -28,8 +28,8 @@ CEO가 G3/G4/G5 승인 후 발급한 `[claude]` issue.
 1. `dd-coordination` skill로 외부 DD RFP 초안 작성 (재무 DD: 회계법인, 법무 DD: 법무법인)
 2. Issue 코멘트에 RFP 초안 게시 + "@deal-execution-codex 리뷰 요청"
 3. Codex 리뷰 후 합의 → Gmail MCP로 외부 업체에 발송
-4. Google Drive에 DD 데이터룸 폴더 생성, 대상 기업 자료 정리
-5. Calendar로 DD 진행 미팅 일정 관리
+4. Google Drive MCP로 DD 데이터룸 폴더 생성, 대상 기업 자료 정리
+5. Google Calendar MCP로 DD 진행 미팅 일정 관리
 6. DD 보고서 수령 시 `dd-coordination` skill로 요약·이슈 정리
 7. Notion Companies DB `dd` status 업데이트
 
@@ -54,6 +54,8 @@ CEO가 G3/G4/G5 승인 후 발급한 `[claude]` issue.
 
 ### 단계 9 — PMI (recurring monthly)
 
+> **트리거:** CEO 월간 루틴 (`ceo-monthly-pmi-report` routine)이 발급한 `[claude]` PMI issue
+
 1. `pmi-playbook-security-distributor` skill의 100일 플랜 체크리스트 실행
 2. 월간 KPI 데이터 수집 (Notion Portfolio DB 업데이트)
 3. CEO에게 월간 리포트 제출
@@ -68,4 +70,7 @@ CEO가 G3/G4/G5 승인 후 발급한 `[claude]` issue.
 
 ## 핸드오프
 
-각 단계 완료 → CEO에게 보고 → 다음 게이트 요청 또는 다음 단계 issue 발급.
+- **단계 6 완료** → CEO에게 DD 보고서 요약 코멘트 → CEO가 G4 게이트 발동
+- **단계 7 완료** → Board에 오퍼 가격 range 승인 요청 (G4) → 승인 후 CEO가 단계 8 issue 발급
+- **단계 8 완료** → CEO에게 클로징 완료 코멘트 + Portfolio DB 업데이트 → CEO가 G5 게이트 최종 확인
+- **단계 9 (월간)** → CEO에게 월간 PMI 리포트 코멘트

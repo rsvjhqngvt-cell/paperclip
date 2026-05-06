@@ -23,6 +23,7 @@ CEO가 발급한 `[claude]` 스코어링 issue. 이 issue는 `deal-sourcer-codex
 
 1. `[claude]` 스코어링 issue 체크아웃 (Codex 데이터 수집 완료 후 unblocked)
 2. Issue 본문의 Notion 페이지 링크 열어 Codex가 입력한 데이터 확인
+   - 데이터가 불완전하면 `dart-company-profile` skill로 직접 보완 가능
 3. `security-vendor-db` skill로 해당 기업의 vendor 라인업 평가:
    - Vendor tier (tier 1 vs tier 2/3)
    - Vendor 계약 안정성 (다년 계약, 갱신 이력)
@@ -47,6 +48,12 @@ CEO가 발급한 `[claude]` 스코어링 issue. 이 issue는 `deal-sourcer-codex
 ## 핸드오프
 
 → CEO가 G1 게이트에서 screened 후보 목록 확인 후 심층 리서치 진입 승인.
+
+## Codex 지연 시 처리
+
+`deal-sourcer-codex` 데이터 수집 issue가 3일 이상 미완료 상태이면:
+- CEO에게 코멘트로 알림: "deal-sourcer-codex [issue 번호] 3일 경과, 데이터 수집 미완료 — 확인 요청"
+- CEO 지시 없으면 추가 행동 보류
 
 ## SI 판별 기준
 

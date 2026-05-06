@@ -25,7 +25,7 @@ CEO가 발급한 `[claude]` 태그 issue. 트리거: 분기 스케줄 또는 "�
 
 1. `[claude]` 태그 issue를 체크아웃
 2. `ko-security-market-research` skill로 데이터 수집:
-   - Naver Search: "IT 보안 총판 시장", "보안 솔루션 유통", "한국 보안 시장 규모 YYYY", KISA 보안산업 실태조사
+   - Naver Search: "IT 보안 총판 시장", "보안 솔루션 유통", "한국 보안 시장 규모 {현재 연도} (예: 2026)", KISA 보안산업 실태조사
    - 각 sub-segment별 성장률, 규제 수혜 여부, 주요 vendor, 알려진 총판 수 추정
 3. `security-vendor-db` skill로 vendor landscape 크로스체크
 4. `market-segment-analysis` skill 프레임워크로 각 segment 점수화 (0-10):
