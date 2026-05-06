@@ -83,23 +83,27 @@ else:
 # 5. AGENTS.md validation + collect slugs and skills
 existing_slugs = set()
 agent_skill_refs = {}
+agent_fm_cache = {}  # cache to avoid double parse_frontmatter call in section 6
 for slug in EXPECTED_AGENTS:
     f = PACKAGE_ROOT / "agents" / slug / "AGENTS.md"
     if not f.exists():
         continue
     existing_slugs.add(slug)
     fm = parse_frontmatter(f)
+    agent_fm_cache[slug] = fm
     for field in ["name", "title", "reportsTo"]:
         if field not in fm:
             errors.append(f"agents/{slug}/AGENTS.md: missing field '{field}'")
-    agent_skill_refs[slug] = fm.get("skills", []) or []
+    skills = fm.get("skills", []) or []
+    if isinstance(skills, str):
+        skills = [skills]
+    agent_skill_refs[slug] = skills
 
-# 6. reportsTo cross-check
+# 6. reportsTo cross-check (reuse cached fm dicts — no second parse_frontmatter call)
 for slug in EXPECTED_AGENTS:
-    f = PACKAGE_ROOT / "agents" / slug / "AGENTS.md"
-    if not f.exists():
+    fm = agent_fm_cache.get(slug)
+    if fm is None:
         continue
-    fm = parse_frontmatter(f)
     reports_to = fm.get("reportsTo")
     if reports_to is not None and reports_to not in existing_slugs:
         errors.append(
@@ -129,7 +133,8 @@ else:
             if slug not in agents_config:
                 errors.append(f".paperclip.yaml: missing config for agent '{slug}'")
             else:
-                adapter = agents_config[slug].get("adapter", {})
+                agent_cfg = agents_config[slug] or {}
+                adapter = agent_cfg.get("adapter", {})
                 adapter_type = adapter.get("type")
                 if adapter_type and adapter_type not in VALID_ADAPTERS:
                     errors.append(
