@@ -1,0 +1,144 @@
+schema: paperclip/v1
+
+agents:
+  ceo:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-opus-4-7
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+
+  market-analyst-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+
+  market-analyst-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+
+  deal-sourcer-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+
+  deal-sourcer-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+
+  research-analyst-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+
+  research-analyst-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+
+  outreach-manager-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+        GOOGLE_OAUTH_TOKEN:
+          kind: secret
+          requirement: required
+
+  outreach-manager-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+        GOOGLE_OAUTH_TOKEN:
+          kind: secret
+          requirement: required
+
+  deal-execution-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+        GOOGLE_OAUTH_TOKEN:
+          kind: secret
+          requirement: required
+
+  deal-execution-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+        GOOGLE_OAUTH_TOKEN:
+          kind: secret
+          requirement: required
+
+routines:
+  ceo-daily-digest:
+    triggers:
+      - kind: schedule
+        cronExpression: "0 9 * * 1-5"
+        timezone: Asia/Seoul
+
+  ceo-weekly-gate-review:
+    triggers:
+      - kind: schedule
+        cronExpression: "0 8 * * 1"
+        timezone: Asia/Seoul
+
+  ceo-monthly-pmi-report:
+    triggers:
+      - kind: schedule
+        cronExpression: "0 9 1 * *"
+        timezone: Asia/Seoul
