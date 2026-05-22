@@ -1,16 +1,16 @@
 ---
 name: security-vendor-db
-description: 한국 IT 보안 시장 vendor 참조 데이터 — 외산/국산 vendor, segment 분류, 총판 패턴
+description: 한국 IT 보안 시장 vendor·채널 참조 데이터 — 외산/국산 vendor, segment 분류, 총판/리셀러/MSSP 패턴
 ---
 
-한국 IT 보안 시장의 주요 vendor 목록과 총판 구조에 대한 참조 데이터입니다.
+한국 IT 보안 시장의 주요 vendor 목록과 채널 구조에 대한 참조 데이터입니다.
 자세한 데이터는 `references/vendor-list.md`를 참조하세요.
 
 ## 사용 방법
 
 1. 분석 대상 기업의 vendor 라인업을 확인할 때 이 skill을 참조
-2. Vendor tier 등급으로 총판 계약 가치 추정
-3. SI vs 총판 판별 시 vendor 계약 보유 여부 확인
+2. Vendor tier 등급으로 총판/리셀러 계약 가치 추정
+3. SI vs 총판/리셀러/MSSP-light 판별 시 vendor 계약 보유 여부 확인
 
 ## Vendor Tier 기준
 
@@ -18,13 +18,23 @@ description: 한국 IT 보안 시장 vendor 참조 데이터 — 외산/국산 v
 - **Tier 2**: 중견 글로벌 vendor (Darktrace, Rapid7, Tenable, Qualys, Varonis, Proofpoint 등)
 - **Tier 3**: 국내/소규모 vendor
 
-## 총판 vs SI 판별 기준
+## 총판/리셀러/MSSP-light vs SI 판별 기준
 
 총판 특성 (인수 적합):
 - 특정 vendor와 공식 파트너/총판 계약 보유
 - 제품(라이선스) 매출 비중 > 50%
 - 유지보수(MRC) 수익 보유
 - 채널(리셀러) 네트워크 운영
+
+리셀러 / VAR 특성 (인수 적합):
+- 특정 보안 솔루션의 인증 파트너 자격 보유
+- 라이선스 + 구축 + 유지보수가 결합되어 있으나 유지보수/구독 비중이 의미 있게 존재
+- 고객 락인 요소(운영 노하우, 인증 인력, 장기 유지보수 계약) 보유
+
+MSSP-light 특성 (조건부 인수 적합):
+- 반복 과금형 관제/운영 계약 보유
+- 서비스가 표준화되어 있고 원격 운영 비중이 높음
+- 인력파견보다 프로세스/플랫폼 기반 수익 구조
 
 SI 특성 (인수 부적합):
 - 매출의 50%+ 프로젝트성 구축 용역

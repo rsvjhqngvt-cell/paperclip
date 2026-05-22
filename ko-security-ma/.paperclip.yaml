@@ -124,6 +124,26 @@ agents:
           kind: secret
           requirement: required
 
+  ai-security-architect-claude:
+    adapter:
+      type: claude_local
+      config:
+        model: claude-sonnet-4-6
+    inputs:
+      env:
+        ANTHROPIC_API_KEY:
+          kind: secret
+          requirement: required
+
+  ai-security-architect-codex:
+    adapter:
+      type: codex_local
+    inputs:
+      env:
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: required
+
 routines:
   ceo-daily-digest:
     triggers:

@@ -541,6 +541,43 @@ a.paperclip-mention-chip[data-mention-kind="agent"]::before {
   opacity: 1;
 }
 
+/* Make MDXEditor table controls easier to discover and use.
+   The default library styling keeps them very faint, which makes row delete
+   feel broken on dense finance tables. */
+.paperclip-mdxeditor-content [class*="_tableEditor_"] [class*="_tableColumnEditorTrigger_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"] [class*="_tableRowEditorTrigger_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"] [class*="_addRowButton_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"] [class*="_addColumnButton_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"] [class*="_iconButton_"] {
+  opacity: 0.45;
+}
+
+@media (hover: hover) {
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_tableColumnEditorTrigger_"],
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_tableRowEditorTrigger_"],
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_addRowButton_"],
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_addColumnButton_"],
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_iconButton_"] {
+    opacity: 0.8;
+  }
+
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_tableColumnEditorTrigger_"]:hover,
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_tableRowEditorTrigger_"]:hover,
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_addRowButton_"]:hover,
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_addColumnButton_"]:hover,
+  .paperclip-mdxeditor-content [class*="_tableEditor_"]:hover [class*="_iconButton_"]:hover {
+    opacity: 1;
+  }
+}
+
+.paperclip-mdxeditor-content [class*="_tableEditor_"]:focus-within [class*="_tableColumnEditorTrigger_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"]:focus-within [class*="_tableRowEditorTrigger_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"]:focus-within [class*="_addRowButton_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"]:focus-within [class*="_addColumnButton_"],
+.paperclip-mdxeditor-content [class*="_tableEditor_"]:focus-within [class*="_iconButton_"] {
+  opacity: 0.9;
+}
+
 /* Rendered markdown code blocks & inline code (prose/MarkdownBody context).
    Dark theme code blocks with compact sizing.
    Override prose CSS variables so prose-invert can't revert to defaults. */

@@ -34,9 +34,9 @@ import { resolveClaudeDesiredSkillNames } from "./skills.js";
 const __moduleDir = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Create a tmpdir with `.claude/skills/` containing symlinks to skills from
- * the repo's `skills/` directory, so `--add-dir` makes Claude Code discover
- * them as proper registered skills.
+ * Create a tmpdir with `.claude/skills/` containing self-contained copies of
+ * runtime skills, so `--add-dir` makes Claude Code discover them as registered
+ * skills without following links back outside Claude's allowed directories.
  */
 async function buildSkillsDir(config: Record<string, unknown>): Promise<string> {
   const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-skills-"));
@@ -49,17 +49,14 @@ async function buildSkillsDir(config: Record<string, unknown>): Promise<string> 
       availableEntries,
     ),
   );
-  // On Windows, regular symlinks require admin or Developer Mode. Junctions
   // (directory junctions) work for any user but only target directories — and
   // skill sources are directories, so this is safe and avoids EPERM on Windows.
-  const linkType = process.platform === "win32" ? "junction" : undefined;
   for (const entry of availableEntries) {
     if (!desiredNames.has(entry.key)) continue;
-    await fs.symlink(
-      entry.source,
-      path.join(target, entry.runtimeName),
-      linkType,
-    );
+    await fs.cp(entry.source, path.join(target, entry.runtimeName), {
+      recursive: true,
+      dereference: true,
+    });
   }
   return tmp;
 }

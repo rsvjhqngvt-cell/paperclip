@@ -10,6 +10,8 @@ allowed-tools:
 
 한국 IT 보안 시장 리서치를 위한 검색 전략과 정보 소스 가이드입니다.
 
+초기 타깃 세그먼트와 세부 쿼리 팩은 `references/initial-target-segments.md`를 우선 참조하세요.
+
 ## 시장 규모/트렌드 검색
 
 ```
@@ -34,6 +36,64 @@ allowed-tools:
 - "EDR 솔루션 유통"
 - "ZTNA 공식 파트너"
 - "Darktrace 파트너사"
+
+## 우선순위 세그먼트별 쿼리 팩
+
+### 1) ZTNA / SASE
+
+```
+"ZTNA 한국 총판"
+"SASE 한국 총판"
+"Zscaler 한국 파트너"
+"Netskope 한국 파트너"
+"Palo Alto Prisma Access 파트너"
+"제로트러스트 구축 파트너" 보안
+```
+
+### 2) IAM / PAM
+
+```
+"PAM 한국 총판"
+"IAM 한국 총판"
+"CyberArk 한국 파트너"
+"BeyondTrust 한국 파트너"
+"Duo 파트너" 한국
+"Okta 파트너" 한국 보안
+```
+
+### 3) 클라우드 보안 (CNAPP / CSPM / CWPP)
+
+```
+"클라우드 보안 한국 총판"
+"CNAPP 한국 파트너"
+"CSPM 한국 파트너"
+"CWPP 한국 파트너"
+"Wiz 한국 파트너"
+"Prisma Cloud 한국 파트너"
+"Lacework 한국 파트너"
+```
+
+### 4) AI Security / Agent Security / Guardrails
+
+```
+"AI 보안 스타트업" 한국
+"LLM 보안" 한국 기업
+"AI 레드팀" 한국
+"AI 가드레일" 한국
+"에이전트 보안" 한국
+"prompt injection 방어" 한국 기업
+"AI 보안 파트너" 한국
+```
+
+### Watchlist) OT / ICS 보안
+
+```
+"OT 보안 한국 총판"
+"ICS 보안 한국 파트너"
+"Claroty 한국 파트너"
+"Nozomi 한국 파트너"
+"Dragos 한국 파트너"
+```
 
 ## 기업 평판/이슈 검색
 
